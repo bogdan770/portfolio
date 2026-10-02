@@ -49,9 +49,9 @@
   color-scheme:light;
 }
 :root[data-theme="dark"]{
-  --ink:#2e112f;--ink-2:#3c1a3d;--rule:#4d354e;--text:#f4efe4;--muted:#b79a99;--accent-2:#969dbb;--accent-text:#b4677a;
+  --ink:#271740;--ink-2:#403256;--rule:#675c79;--text:#f4efe4;--muted:#b79a99;--accent-2:#969dbb;--accent-text:#b4677a;
   --accent:#aa5268;--accent-ink:#f4efe4;--accent-rgb:170,82,104;--accent-hover:#884253;
-  --tint:244,239,228;--nav-bg:rgba(46,17,47,.88);
+  --tint:244,239,228;--nav-bg:rgba(39,23,64,.88);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -67,7 +67,7 @@ body{
   background:var(--ink);color:var(--text);
 }
 :root[data-theme="dark"] .invert{
-  --ink:#1b0a1c;--ink-2:#241026;
+  --ink:#150c23;--ink-2:#31293d;
 }
 img,video{display:block;max-width:100%}
 [hidden]{display:none!important}
@@ -1497,7 +1497,7 @@ function setTheme(t){
   else document.documentElement.removeAttribute("data-theme");
   try { localStorage.setItem("theme", t); } catch(e){}
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", t === "dark" ? "#2e112f" : "#ebe6d2");
+  if (meta) meta.setAttribute("content", t === "dark" ? "#271740" : "#ebe6d2");
 }
 $("#theme-toggle").onclick = () => {
   const isDark = document.documentElement.getAttribute("data-theme") === "dark";
