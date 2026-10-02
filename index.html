@@ -292,8 +292,18 @@ h2{
 .hover-preview.show{opacity:1;pointer-events:auto;transform:scale(1)}
 .hover-preview.h{flex-direction:column;width:min(620px,90vw)}
 .hover-preview.v{flex-direction:row;width:min(780px,90vw)}
-.hp-media{background:var(--ink);display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;overflow:hidden}
+.hp-media{position:relative;background:var(--ink);display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;overflow:hidden}
 .hp-media img{display:block;width:auto;height:auto;object-fit:contain}
+.hp-expand{
+  position:absolute;right:10px;bottom:10px;z-index:1;
+  display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+  padding:0;border:1px solid rgba(var(--tint),.12);border-radius:var(--radius-sm);
+  background:rgba(var(--tint),.72);color:#f4efe4;cursor:pointer;
+  opacity:0;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease,border-color .18s ease;
+}
+.hp-media:hover .hp-expand,.hp-expand:focus-visible{opacity:1;transform:translateY(0)}
+.hp-expand:hover{border-color:var(--accent)}
+@media (hover:none),(pointer:coarse){.hp-expand{opacity:1;transform:none}}
 .hover-preview.h .hp-media img{max-width:min(620px,90vw);max-height:50vh}
 .hover-preview.v .hp-media{flex:0 0 auto}
 .hover-preview.v .hp-media img{max-height:80vh;max-width:min(420px,50vw)}
@@ -327,6 +337,28 @@ textarea{min-height:150px;resize:vertical}
 
 footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);font-size:.9rem}
 
+/* fullscreen image viewer */
+#fs-view{
+  position:fixed;inset:0;margin:0;padding:0;width:100vw;height:100vh;max-width:100vw;max-height:100vh;
+  border:0;background:rgba(10,9,8,.94);
+}
+#fs-view::backdrop{background:rgba(10,9,8,.94)}
+#fs-view[open]{display:flex;align-items:center;justify-content:center}
+#fs-view img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#fs-close,#fs-prev,#fs-next{
+  position:fixed;display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;padding:0;border:1px solid rgba(244,239,228,.25);border-radius:50%;
+  background:rgba(10,9,8,.55);color:#f4efe4;cursor:pointer;transition:border-color .2s,background .2s;
+}
+#fs-close:hover,#fs-prev:hover,#fs-next:hover{border-color:var(--accent);background:rgba(10,9,8,.85)}
+#fs-close{top:20px;right:20px}
+#fs-prev{top:50%;left:20px;transform:translateY(-50%)}
+#fs-next{top:50%;right:20px;transform:translateY(-50%)}
+@media (max-width:600px){
+  #fs-prev{left:8px}
+  #fs-next{right:8px}
+  #fs-close{top:12px;right:12px}
+}
 
 @media (max-width:820px){
   .contact,.intro-grid{grid-template-columns:1fr}
@@ -457,7 +489,12 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
 <footer class="invert"><div class="wrap">© 2026 <span id="foot-name">Bogdan Sliusarenko</span></div></footer>
 
 <div class="hover-preview" id="hover-preview" aria-hidden="true">
-  <div class="hp-media"><img id="hp-img" alt=""></div>
+  <div class="hp-media">
+    <img id="hp-img" alt="">
+    <button type="button" class="hp-expand" id="hp-expand" aria-label="View full size">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+    </button>
+  </div>
   <div class="hp-body">
     <strong id="hp-title"></strong>
     <div class="hp-roles" id="hp-roles"></div>
@@ -466,6 +503,19 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
     <span class="hp-spec" id="hp-spec"></span>
   </div>
 </div>
+
+<dialog id="fs-view" aria-label="Full size image">
+  <img id="fs-img" alt="">
+  <button type="button" id="fs-close" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <button type="button" id="fs-prev" aria-label="Previous">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button type="button" id="fs-next" aria-label="Next">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</dialog>
 
 <script>
 /* ───────── Edit these ───────── */
@@ -1322,6 +1372,39 @@ function hidePreview(){
   hp.classList.remove("show");
   openIndex = -1;
 }
+
+/* ───────── Fullscreen image viewer ───────── */
+const fsView = $("#fs-view"), fsImg = $("#fs-img");
+let fsIndex = -1;
+function fsShow(i){
+  const it = flat[i];
+  if (!it) return;
+  fsIndex = i;
+  fsImg.src = it.img; fsImg.alt = it.t;
+}
+function openFullscreen(i){
+  fsShow(i);
+  hidePreview();
+  if (!fsView.open) {
+    fsView.showModal();
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  }
+}
+function fsStep(d){ fsShow((fsIndex + d + flat.length) % flat.length); }
+$("#hp-expand").onclick = () => { if (openIndex !== -1) openFullscreen(openIndex); };
+$("#fs-prev").onclick = () => fsStep(-1);
+$("#fs-next").onclick = () => fsStep(1);
+$("#fs-close").onclick = () => fsView.close();
+fsView.addEventListener("close", () => {
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+});
+fsView.addEventListener("click", e => { if (e.target === fsView) fsView.close(); });
+fsView.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") { e.preventDefault(); fsStep(1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); fsStep(-1); }
+});
 
 /* Hover (mouse/trackpad) — harmless no-op on devices that never fire these */
 let showTimer, hideTimer;
