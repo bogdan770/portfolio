@@ -1400,6 +1400,7 @@ function positionPreview(anchorRect){
 function showPreview(i, tileEl){
   const it = flat[i];
   if (!it) return;
+  hp.dataset.i = i;
   fillPreview(it);
   hpImg.alt = it.t;
   const reveal = () => {
@@ -1440,7 +1441,10 @@ function openFullscreen(i){
   }
 }
 function fsStep(d){ fsShow((fsIndex + d + flat.length) % flat.length); }
-$("#hp-expand").onclick = () => { if (openIndex !== -1) openFullscreen(openIndex); };
+$("#hp-expand").onclick = () => {
+  const i = +hp.dataset.i;
+  if (!isNaN(i)) openFullscreen(i);
+};
 $("#fs-prev").onclick = () => fsStep(-1);
 $("#fs-next").onclick = () => fsStep(1);
 $("#fs-close").onclick = () => fsView.close();
