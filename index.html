@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bogdan Sliusarenko - Mechanical Engineer</title>
 <meta name="description" content="Bogdan Sliusarenko - mechanical engineer. Steel structures, sheet-metal enclosures and welded assemblies, from CAD to the shop floor.">
-<meta name="theme-color" content="#f4efe4">
+<meta name="theme-color" content="#f6f1e6">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bogdin.dev/">
 <meta property="og:title" content="Bogdan Sliusarenko - Mechanical Engineer">
@@ -28,17 +28,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#f4efe4;
+  --ink:#f6f1e6;
   --ink-2:#ffffff;
-  --rule:#ddd3bd;
+  --rule:#ddd0b8;
   --text:#18140e;
-  --muted:#6e6657;
-  --accent:#e2500f;
-  --accent-text:#b3430d;
+  --muted:#6d636f;
+  --accent:#d37e07;
+  --accent-text:#a96506;
   --accent-ink:#18140e;
-  --accent-2:#a89c88;
+  --accent-2:#c3b493;
   --tint:24,20,14;
-  --nav-bg:rgba(244,239,228,.88);
+  --nav-bg:rgba(246,241,230,.88);
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   --gut:clamp(20px,5vw,56px);
   --max:1180px;
@@ -1494,7 +1494,7 @@ function setTheme(t){
   else document.documentElement.removeAttribute("data-theme");
   try { localStorage.setItem("theme", t); } catch(e){}
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", t === "dark" ? "#18140e" : "#f4efe4");
+  if (meta) meta.setAttribute("content", t === "dark" ? "#18140e" : "#f6f1e6");
 }
 $("#theme-toggle").onclick = () => {
   const isDark = document.documentElement.getAttribute("data-theme") === "dark";
