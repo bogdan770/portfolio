@@ -64,7 +64,7 @@ a{color:inherit}
 }
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
 .brand{
-  font-weight:700;text-decoration:none;letter-spacing:.01em;color:var(--text);
+  font-size:clamp(1.05rem,2.4vw,1.35rem);font-weight:700;text-decoration:none;letter-spacing:.01em;color:var(--text);
 }
 .nav{display:flex;align-items:center;gap:clamp(14px,3vw,30px);font-size:.95rem}
 .nav a{text-decoration:none;color:var(--muted);position:relative}
@@ -153,11 +153,6 @@ a{color:inherit}
 }
 .hero p{max-width:34em;margin:22px 0 34px;font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted)}
 .hero .actions{display:flex;flex-wrap:wrap;gap:12px}
-
-.kicker{
-  display:block;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--muted);
-  margin:0 0 8px;font-weight:600;
-}
 .badge{
   display:inline-flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);
   border:1px solid var(--rule);border-radius:var(--radius-sm);padding:6px 14px 6px 10px;margin-bottom:22px;
@@ -436,7 +431,6 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
 <main id="top">
   <div class="wrap hero">
     <span class="badge"><span class="dot"></span><span data-i18n="badge">Open to new roles</span></span>
-    <span class="kicker" id="kicker">Bogdan Sliusarenko</span>
     <h1 id="measure" data-i18n="hero_title">Mechanical engineer</h1>
     <div class="dim-wrap" id="dimwrap" aria-hidden="true">
       <svg class="dim" id="dim" height="34"></svg>
@@ -1235,7 +1229,6 @@ function applyText(){
   });
   $("#brand").textContent = CONFIG.name;
   $("#foot-name").textContent = CONFIG.name;
-  $("#kicker").textContent = CONFIG.name;
   const mail = $("#mail"); mail.href = "mailto:" + CONFIG.email; mail.textContent = CONFIG.email;
   const phone = $("#phone"); phone.href = "tel:" + CONFIG.phoneTel; phone.textContent = CONFIG.phone;
   const li = $("#linkedin"); li.href = CONFIG.linkedin;
