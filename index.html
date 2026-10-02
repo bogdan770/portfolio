@@ -49,9 +49,9 @@
   color-scheme:light;
 }
 :root[data-theme="dark"]{
-  --ink:#18140e;--ink-2:#231d15;--rule:#3a2f22;--text:#f4efe4;--muted:#a89c88;--accent-2:#6e6657;--accent-text:#ff7a3d;
-  --accent:#e2500f;--accent-ink:#18140e;--accent-rgb:226,80,15;--accent-hover:#c74409;
-  --tint:244,239,228;--nav-bg:rgba(24,20,14,.88);
+  --ink:#2e112f;--ink-2:#3c1a3d;--rule:#4d354e;--text:#f4efe4;--muted:#b79a99;--accent-2:#969dbb;--accent-text:#c6778d;
+  --accent:#bd5f7a;--accent-ink:#18140e;--accent-rgb:189,95,122;--accent-hover:#8d475b;
+  --tint:244,239,228;--nav-bg:rgba(46,17,47,.88);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -67,7 +67,7 @@ body{
   background:var(--ink);color:var(--text);
 }
 :root[data-theme="dark"] .invert{
-  --ink:#0e0c08;--ink-2:#191410;
+  --ink:#1b0a1c;--ink-2:#241026;
 }
 img,video{display:block;max-width:100%}
 [hidden]{display:none!important}
@@ -1497,7 +1497,7 @@ function setTheme(t){
   else document.documentElement.removeAttribute("data-theme");
   try { localStorage.setItem("theme", t); } catch(e){}
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", t === "dark" ? "#18140e" : "#ebe6d2");
+  if (meta) meta.setAttribute("content", t === "dark" ? "#2e112f" : "#ebe6d2");
 }
 $("#theme-toggle").onclick = () => {
   const isDark = document.documentElement.getAttribute("data-theme") === "dark";
