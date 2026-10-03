@@ -1,56 +1,58 @@
-Портфолио bogdin.dev — как пользоваться
+bogdin.dev portfolio - how to use this repo
 
-СТРУКТУРА
-- index.html       — весь сайт: разметка, стили и контент в одном файле.
-- assets/work/     — фото работ (webp), используются в блоке GROUPS.
-- assets/media/    — доп. фото и видео для проектов (webp/mp4).
-- icons/, favicon.ico — иконки вкладки и значки для телефона/PWA.
-- og-image.png     — превью при шаринге ссылки (OpenGraph/Twitter).
-- Bogdan-Sliusarenko-Mechanical-Engineer.pdf — файл, который скачивается по кнопке "Download CV".
-- CNAME            — домен для GitHub Pages (bogdin.dev).
-- robots.txt, sitemap.xml — для поисковых роботов.
-- google*.html     — файл подтверждения владения сайтом в Google Search Console. НЕ УДАЛЯТЬ, иначе слетит верификация.
+STRUCTURE
+- index.html       - the whole site: markup, styles and content in one file.
+- assets/work/     - project photos (webp), used in the GROUPS block.
+- assets/media/    - extra photos and video for projects (webp/mp4).
+- icons/, favicon.ico - tab icon and phone/PWA icons.
+- og-image.png     - link preview image (OpenGraph/Twitter).
+- Bogdan-Sliusarenko-Mechanical-Engineer.pdf - the file downloaded by the "Download CV" button.
+- CNAME            - custom domain for GitHub Pages (bogdin.dev).
+- robots.txt, sitemap.xml - for search engine crawlers.
+- google*.html     - Google Search Console ownership verification file. DO NOT DELETE, or verification is lost.
 
-РЕДАКТИРОВАНИЕ ТЕКСТА
-Весь контент — в JS-блоках в конце index.html:
-- CONFIG       — имя, email, телефон, LinkedIn, локация.
-- T            — все подписи интерфейса (кнопки, заголовки секций).
-- INTRO_PARAS / INTRO_CARDS — текст блока "About myself" и три карточки под ним.
-- GROUPS       — проекты и фотографии в разделе "Work" (заголовки, описания, подписи к фото).
-- EXPERIENCE   — таймлайн опыта.
-- TESTIMONIALS — отзывы в разделе "Recommendations".
+EDITING TEXT
+All content lives in JS blocks near the end of index.html:
+- CONFIG       - name, email, phone, LinkedIn, location.
+- T            - all UI copy (buttons, section headings).
+- INTRO_PARAS / INTRO_CARDS - the "About myself" text and the three cards below it.
+- GROUPS       - projects and photos in the "Work" section (titles, descriptions, photo captions).
+- EXPERIENCE   - the experience timeline.
+- TESTIMONIALS - quotes in the "Recommendations" section.
 
-Сайт на одном языке (английский), переключателя RU/EN сейчас нет.
+The site is single-language (English) - there is no RU/EN toggle.
 
-ЗАМЕНА CV
-Положи новый PDF рядом с index.html и either:
-- назови файл так же: Bogdan-Sliusarenko-Mechanical-Engineer.pdf, либо
-- переименуй, и поправь оба атрибута href/download в блоке contact (строка с "Download CV").
+REPLACING THE CV
+Put the new PDF next to index.html, and either:
+- name it the same: Bogdan-Sliusarenko-Mechanical-Engineer.pdf, or
+- rename it and update the href/download attributes on the "Download CV" link in the contact section.
 
-ЛОКАЛЬНЫЙ ПРОСМОТР
-Открой index.html прямо в браузере — сайт статический, сервер не нужен.
+LOCAL PREVIEW
+Open index.html directly in a browser - the site is static, no server needed.
 
-ДЕПЛОЙ
-Сайт автоматически публикуется через GitHub Pages из репозитория
-github.com/bogdan770/portfolio, ветка main. Чтобы обновить сайт:
-  git add <файлы>
+DEPLOYMENT
+The site is published automatically via GitHub Pages from
+github.com/bogdan770/portfolio, branch main. To publish an update:
+  git add <files>
   git commit -m "..."
   git push origin main
-Через 1-2 минуты изменения появятся на https://bogdin.dev/.
-Домен и DNS управляются через Cloudflare.
+Changes go live on https://bogdin.dev/ within a minute or two.
+DNS and the domain are managed through Cloudflare.
 
-АНАЛИТИКА
-Cloudflare Web Analytics подключена прямо в index.html (тег в конце
-<body>). Статистику смотреть на dash.cloudflare.com → Web Analytics.
+ANALYTICS
+Cloudflare Web Analytics is embedded directly in index.html (a
+script tag near the end of <body>). View stats at
+dash.cloudflare.com -> Web Analytics.
 
 SEO
-- robots.txt разрешает индексацию всем, sitemap.xml указывает на
-  единственную страницу /.
-- В <head> есть canonical, meta robots/author и JSON-LD (schema.org
-  Person) для карточки в поиске Google.
-- Сайт подтверждён в Google Search Console (см. google*.html выше).
+- robots.txt allows indexing for all crawlers; sitemap.xml points to
+  the single page /.
+- <head> includes a canonical link, robots/author meta tags and
+  JSON-LD (schema.org Person) for Google's search result card.
+- The site is verified in Google Search Console (see google*.html above).
 
-ЧТО НЕ ВХОДИТ В САЙТ
-Папки VEEV/, ss/, файлы Bogdan-Sliusarenko-Portfolio.html и
-portfolio-deploy.zip лежат в репозитории локально, но игнорируются
-git'ом (.gitignore) — это черновики/исходники, на сайт не попадают.
+NOT PART OF THE LIVE SITE
+The VEEV/ and ss/ folders, Bogdan-Sliusarenko-Portfolio.html and
+portfolio-deploy.zip exist locally in this folder but are excluded
+from git (.gitignore) - they're drafts/source material, not part of
+the deployed site.
