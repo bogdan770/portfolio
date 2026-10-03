@@ -156,6 +156,17 @@ a{color:inherit}
 .btn.ghost:hover{border-color:var(--accent);color:var(--accent-text);background:rgba(var(--accent-rgb),.06)}
 .btn.small{padding:7px 16px;font-size:.9rem}
 
+/* consent banner */
+.consent-banner{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:var(--ink-2);border-top:1px solid var(--rule);
+  padding:16px var(--gut);
+  display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between;
+  box-shadow:0 -4px 20px rgba(0,0,0,.08);
+}
+.consent-banner p{margin:0;font-size:.92rem;color:var(--text);max-width:640px}
+.consent-actions{display:flex;gap:10px;flex-shrink:0}
+
 /* hero */
 .hero{padding-block:clamp(56px,13vh,140px) clamp(56px,10vh,110px);position:relative;z-index:0}
 .hero::before{
@@ -440,6 +451,13 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
 <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+<div class="consent-banner" id="consent-banner" hidden role="dialog" aria-label="Cookie consent">
+  <p data-i18n="consent_text">This site uses Google Analytics to understand how visitors use it. No data is used for advertising.</p>
+  <div class="consent-actions">
+    <button type="button" class="btn ghost small" id="consent-decline" data-i18n="consent_decline">Decline</button>
+    <button type="button" class="btn small" id="consent-accept" data-i18n="consent_accept">Accept</button>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap">
@@ -602,6 +620,9 @@ const CONFIG = {
 };
 
 const T = {
+  "consent_text": "This site uses Google Analytics to understand how visitors use it. No data is used for advertising.",
+  "consent_decline": "Decline",
+  "consent_accept": "Accept",
   "nav_work": "Work",
   "nav_about": "About me",
   "nav_skills": "Tech stack",
@@ -1464,6 +1485,7 @@ function openFullscreen(i){
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
   }
+  trackEvent("view_item", { item_name: flat[i] && flat[i].t });
 }
 function fsStep(d){ fsShow((fsIndex + d + flat.length) % flat.length); }
 $("#hp-expand").onclick = () => {
@@ -1551,12 +1573,50 @@ $("#form").addEventListener("submit", e => {
   const subject = encodeURIComponent("Portfolio message from " + f.get("name"));
   const body = encodeURIComponent(f.get("msg") + "\n\n" + f.get("name") + " (" + f.get("email") + ")");
   location.href = "mailto:" + CONFIG.email + "?subject=" + subject + "&body=" + body;
+  trackEvent("generate_lead");
 });
 
 applyText();
 drawDimension(!matchMedia("(prefers-reduced-motion: reduce)").matches);
 let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => drawDimension(false), 120); });
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => drawDimension(false));
+
+/* ───────── Analytics (GA4 + consent) ───────── */
+const GA_ID = "G-MTS6PLM3W6";
+function loadGA(){
+  if (window.gtagLoaded) return;
+  window.gtagLoaded = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag("js", new Date());
+  gtag("config", GA_ID);
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+  document.head.appendChild(s);
+}
+function trackEvent(name, params){
+  if (window.gtag) gtag("event", name, params || {});
+}
+const consentBanner = $("#consent-banner");
+const consent = localStorage.getItem("analytics-consent");
+if (consent === "granted") loadGA();
+else if (consent !== "denied") consentBanner.hidden = false;
+$("#consent-accept").addEventListener("click", () => {
+  localStorage.setItem("analytics-consent", "granted");
+  consentBanner.hidden = true;
+  loadGA();
+});
+$("#consent-decline").addEventListener("click", () => {
+  localStorage.setItem("analytics-consent", "denied");
+  consentBanner.hidden = true;
+});
+document.querySelectorAll("a[download]").forEach(a => {
+  a.addEventListener("click", () => trackEvent("download_cv"));
+});
+$("#mail").addEventListener("click", () => trackEvent("contact_click", { method: "email" }));
+$("#phone").addEventListener("click", () => trackEvent("contact_click", { method: "phone" }));
+$("#linkedin").addEventListener("click", () => trackEvent("contact_click", { method: "linkedin" }));
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a23bfbfc762045ce834f36b8ffeeed89"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
