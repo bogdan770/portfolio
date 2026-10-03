@@ -373,6 +373,7 @@ textarea{min-height:150px;resize:vertical}
 .form-foot span{font-size:.88rem;color:var(--muted)}
 
 footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);font-size:.9rem}
+.footer-note{margin:0 0 10px;font-size:.82rem;opacity:.75}
 
 /* fullscreen image viewer */
 #fs-view{
@@ -535,7 +536,7 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
   </section>
 </main>
 
-<footer class="invert"><div class="wrap">© 2026 <span id="foot-name">Bogdan Sliusarenko</span></div></footer>
+<footer class="invert"><div class="wrap"><p class="footer-note" data-i18n="footer_note">All photos shown are examples of past work and are copyright protected. They are used on this site only to demonstrate my experience and skills.</p>© 2026 <span id="foot-name">Bogdan Sliusarenko</span></div></footer>
 
 <div class="hover-preview" id="hover-preview" aria-hidden="true">
   <div class="hp-media">
@@ -586,7 +587,7 @@ const T = {
   "cv": "Download CV",
   "badge": "Open to new roles",
   "hero_title": "Mechanical engineer",
-  "hero_sub": "I develop products from an open requirement to a manufacturable design - sheet-metal assemblies and steel structures, prototyped, iterated and taken to the shop floor myself.",
+  "hero_sub": "From concepts and ideas to manufacture ready designs, I can design, prototype, iterate and even produce a wide variety of products for almost any need.",
   "hero_cta": "View projects",
   "hero_contact": "Contact me",
   "tag0": "R&D",
@@ -612,19 +613,20 @@ const T = {
   "f_send": "Send message",
   "f_note": "Opens your email app.",
   "drawing": "Drawing",
-  "result": "Result:"
+  "result": "Result:",
+  "footer_note": "All photos shown are examples of past work and are copyright protected. They are used on this site only to demonstrate my experience and skills."
 };
 
 const INTRO_PARAS = [
-  "I'm a mechanical engineer who works R&amp;D end-to-end - from an open requirement to a design I've personally carried through fabrication drawings, CNC programming and field installation. <b>Design here is iterative, not single-pass:</b> drawings get revised as shop and field issues come in, sometimes five times before release, and a part that comes in many sizes gets one parametric drawing instead of a redraw for each.",
-  "I started in heavy industrial machinery in Russia, then retrained into CAD-driven design after relocating to Israel in 2020. At M. Lachman I owned <b>R&amp;D and new-product introduction end-to-end</b>. At Veev (2024–2026) I scaled that into a ~100-assembly CAD portfolio, resolving conflicts across structural, MEP and architectural layers before release. I also <b>build my own tools</b> - including this site."
+  "I'm a mechanical engineer who is involved in the entire lifecycle of a product, from fabrication drawings, CNC drawings and all the way to field installations. <b>Design here is iterative, not single-pass:</b> revisions based on actual feedback, both from the shop floor and from the field, allow me to create the best product possible, and design choices implemented in the first phases of development (such as parametric drawings for parts that come in several sizes) allow flexibility and effective solution management in the later stages of design.",
+  "I started in heavy industrial machinery in Russia, then retrained into CAD-driven design after relocating to Israel in 2019. At M. Lachman I owned <b>R&amp;D and new-product introduction end-to-end</b>. At Veev (2024–2026) I scaled that into a ~100-assembly CAD portfolio, resolving conflicts across structural, MEP and architectural layers before release. I also <b>build my own tools</b> - including this site."
 ];
 
 const INTRO_CARDS = [
   {
     "ic": "⚙️",
     "t": "Full product lifecycle",
-    "d": "From the first CAD surface to fabrication drawings, CNC programs and field installation - I own the whole handoff, not one stage of it."
+    "d": "From the first CAD surface to fabrication drawings, CNC drawings and field installations, I have knowledge and experience in every stage of design."
   },
   {
     "ic": "🧭",
@@ -633,8 +635,8 @@ const INTRO_CARDS = [
   },
   {
     "ic": "💻",
-    "t": "Builds its own tools",
-    "d": "Completed a full-stack web development practicum in 2023 and built this site by hand, template-free - the same problem-solving that fabricates a part also ships an app."
+    "t": "Digital autonomy",
+    "d": "Completed a full-stack development practicum in 2023, and have built this site by hand."
   }
 ];
 
@@ -755,7 +757,7 @@ const EXPERIENCE = [
   },
   {
     "life": true,
-    "when": "2019 - 2020",
+    "when": "2019",
     "t": "Relocated to Israel"
   },
   {
@@ -848,7 +850,7 @@ const TESTIMONIALS = [
 const GROUPS = [
   {
     "title": "Veev - enterprise CAD",
-    "skills": "At this scale, the job wasn't drawing one wall panel - it was making sure about 100 different panels would go together on the line without conflicts, like a stud blocking a conduit. The line builds each panel step by step, so wiring has to be finished before a wall closes up on both sides, and framing and electrical drawings had to match that sequence. Instead of redesigning connectors for every assembly, I kept a small catalog of proven parts and reused them.",
+    "skills": "At Veev, the scale of design was huge: drawing and making sure ~100 different panels would all go together and match up without conflict. Each wall had design requirements that had to comply with its specific function, state-level building regulations and safety standards. Taking into consideration the limitations and abilities of the actual manufacturing process in the shop, each panel was designed with these requirements in mind. The main vision of Veev was modular design, so I created for myself a relevant catalog of proven parts and reused them across several different panels.",
     "period": "Veev · 2024–2026",
     "roles": [
       "CAD Design",
