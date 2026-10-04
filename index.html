@@ -48,6 +48,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
+  --ink-rgb:235,230,210;
   --ink:#ebe6d2;
   --ink-2:#fffdf5;
   --rule:#afcec5;
@@ -69,6 +70,7 @@
   color-scheme:light;
 }
 :root[data-theme="dark"]{
+  --ink-rgb:39,23,64;
   --ink:#271740;--ink-2:#403256;--rule:#675c79;--text:#f4efe4;--muted:#b79a99;--accent-2:#969dbb;--accent-text:#b4677a;
   --accent:#aa5268;--accent-ink:#f4efe4;--accent-rgb:170,82,104;--accent-hover:#884253;
   --tint:244,239,228;--nav-bg:rgba(39,23,64,.88);
@@ -77,18 +79,27 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{
-  margin:0;background:var(--ink);color:var(--text);
+  margin:0;color:var(--text);
   font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif;
   font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased;
-  transition:background .25s,color .25s;
+  transition:background-color .25s,color .25s;
+  background-color:var(--ink);
+  background-image:
+    linear-gradient(rgba(var(--tint),.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(var(--tint),.06) 1px,transparent 1px);
+  background-size:34px 34px;
+  background-attachment:fixed;
 }
 .invert{
+  --ink-rgb:24,20,14;
   --ink:#18140e;--ink-2:#231d15;--rule:#3a2f22;--text:#f4efe4;--muted:#a89c88;--accent-2:#6e6657;
   background:var(--ink);color:var(--text);
 }
 :root[data-theme="dark"] .invert{
+  --ink-rgb:21,12,35;
   --ink:#150c23;--ink-2:#31293d;
 }
+#contact.invert{background:rgba(var(--ink-rgb),.85)}
 img,video{display:block;max-width:100%}
 [hidden]{display:none!important}
 a{color:inherit}
@@ -171,10 +182,6 @@ a{color:inherit}
 .hero{padding-block:clamp(56px,13vh,140px) clamp(56px,10vh,110px);position:relative;z-index:0}
 .hero::before{
   content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
-  background-image:linear-gradient(rgba(var(--tint),.06) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--tint),.06) 1px,transparent 1px);
-  background-size:34px 34px;
-  mask-image:linear-gradient(to bottom,#000,transparent 82%);
-  -webkit-mask-image:linear-gradient(to bottom,#000,transparent 82%);
 }
 .hero h1{
   margin:0;padding-bottom:.24em;width:fit-content;max-width:100%;
