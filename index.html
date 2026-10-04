@@ -82,13 +82,16 @@ body{
   margin:0;color:var(--text);
   font-family:"Space Grotesk","Helvetica Neue",Arial,sans-serif;
   font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased;
-  transition:background-color .25s,color .25s;
+  transition:color .25s;
+}
+.bg-fixed{
+  position:fixed;inset:0;z-index:-1;
   background-color:var(--ink);
   background-image:
     linear-gradient(rgba(var(--tint),.06) 1px,transparent 1px),
     linear-gradient(90deg,rgba(var(--tint),.06) 1px,transparent 1px);
   background-size:34px 34px;
-  background-attachment:fixed;
+  transition:background-color .25s;
 }
 .invert{
   --ink-rgb:24,20,14;
@@ -458,6 +461,7 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
 <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+<div class="bg-fixed"></div>
 <div class="consent-banner" id="consent-banner" hidden role="dialog" aria-label="Cookie consent">
   <p data-i18n="consent_text">This site uses Google Analytics to understand how visitors use it. No data is used for advertising.</p>
   <div class="consent-actions">
