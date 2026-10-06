@@ -424,6 +424,19 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
 #fs-view::backdrop{background:rgba(10,9,8,.94)}
 #fs-view[open]{display:flex;align-items:center;justify-content:center}
 #fs-view img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+.fs-caption{
+  position:fixed;left:0;right:0;bottom:0;z-index:1;pointer-events:none;
+  padding:20px 24px calc(18px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top, rgba(10,9,8,.85), rgba(10,9,8,0));
+  color:#f4efe4;
+}
+.fs-caption strong{display:block;font-size:1rem;font-weight:600;margin-bottom:5px}
+.fs-caption p{margin:0 0 5px;font-size:.88rem;line-height:1.55;color:#f4efe4;opacity:.92;max-width:680px}
+.fs-caption .fs-spec{display:block;font-size:.76rem;font-family:var(--mono);opacity:.6}
+@media (max-width:600px){
+  .fs-caption{padding:14px 16px 16px}
+  .fs-caption p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+}
 #fs-close,#fs-prev,#fs-next{
   position:fixed;display:inline-flex;align-items:center;justify-content:center;
   width:44px;height:44px;padding:0;border:1px solid rgba(244,239,228,.25);border-radius:50%;
@@ -608,6 +621,11 @@ footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);f
 
 <dialog id="fs-view" aria-label="Full size image">
   <img id="fs-img" alt="">
+  <div class="fs-caption" id="fs-caption">
+    <strong id="fs-title"></strong>
+    <p id="fs-desc"></p>
+    <span class="fs-spec" id="fs-spec"></span>
+  </div>
   <button type="button" id="fs-close" aria-label="Close">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
@@ -1487,6 +1505,9 @@ function fsShow(i){
   if (!it) return;
   fsIndex = i;
   fsImg.src = it.img; fsImg.alt = it.t;
+  $("#fs-title").textContent = it.t || "";
+  $("#fs-desc").textContent = it.a || "";
+  $("#fs-spec").textContent = it.s || "";
 }
 function openFullscreen(i){
   fsShow(i);
@@ -1540,13 +1561,11 @@ document.addEventListener("focusout", e => {
 });
 addEventListener("scroll", hidePreview, { passive: true });
 
-/* Tap (touch) - always wired too, since device capability can't be detected reliably */
+/* Click/tap on a tile opens the full-size viewer directly - identical on desktop and mobile */
 document.addEventListener("click", e => {
   const t = e.target.closest(".strip .tile");
   if (t) {
-    const i = +t.dataset.i;
-    if (openIndex === i) hidePreview();
-    else { showPreview(i, t); openIndex = i; }
+    openFullscreen(+t.dataset.i);
     return;
   }
   if (openIndex !== -1 && !e.target.closest(".hover-preview")) hidePreview();
